@@ -48,7 +48,6 @@ const List = mongoose.model("List", listSchema);
 
 
 app.get("/", function(req, res) {
-  // const day = date.getDate();
   Item.find({}, function(err, results) {
     if (results.length === 0) {
       Item.insertMany(defaultItems, function(err) {
@@ -141,9 +140,5 @@ if (port == null || port == "") {
   port = 3000;
 }
 app.listen(port, function(){
-  console.log("Server has started Successfully!");
+  console.log("Server has started successfully started on port: " + port);
 });
-
-// app.listen(3000, function() {
-//   console.log("Server started on port 3000");
-// });
