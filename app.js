@@ -1,5 +1,3 @@
-//jshint esversion:6
-
 const express = require("express");
 const bodyParser = require("body-parser");
 const date = require(__dirname + "/date.js");
@@ -17,7 +15,7 @@ app.use(express.static(__dirname + "/public"));
 // const items = ["Buy Food", "Cook Food", "Eat Food"];
 // const workItems = [];
 
-mongoose.connect("mongodb+srv://stevenle928:testing123@cluster0.psokm.mongodb.net/todolistDB");
+mongoose.connect(credentials.url);
 
 const itemSchema = new mongoose.Schema({
   name: String,
@@ -99,8 +97,12 @@ app.post("/", function(req, res) {
   });
 
   if(listName === "Today"){
-    newItem.save();
-    res.redirect("/");
+    newItem.save(function(err){
+      if(!err){
+        res.redirect("/");
+      }
+    });
+
   } else {
     List.findOne({name: listName}, function(err, listFound){
       listFound.items.push(newItem);
